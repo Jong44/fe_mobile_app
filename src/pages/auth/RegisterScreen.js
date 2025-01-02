@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+    Alert,
     StyleSheet,
     Text,
     Touchable,
@@ -9,19 +10,24 @@ import {
 import TextField from "../../components/TextField";
 import ButtonSecondary from "../../components/ButtonSecondary";
 import { BaseButton, ScrollView } from "react-native-gesture-handler";
+import { useFocusEffect } from "@react-navigation/native";
+import { Register } from "../../services/api/AuthService";
+import { handleApiError } from "../../services/utils/ErorHandling";
 
-const RegisterScreen = () => {
+const RegisterScreen = ({
+    navigation
+}) => {
     const [indexField, setIndexField] = useState(0);
     const [formData, setFormData] = useState({
         name: "",
-        birthOfDate: "",
+        birth_of_date: "",
         email: "",
-        phoneNumber: "",
+        phone_number: "",
         npwp: "",
         password: "",
-        confirmPassword: "",
-        minInvestment: "",
-        maxInvestment: "",
+        confirm_password: "",
+        min_investment: "",
+        max_investment: "",
         location: "",
         industry: null,
         is_representative: false,
@@ -30,32 +36,39 @@ const RegisterScreen = () => {
         {
             label: "Name",
             placeholder: "Please input your name",
+            name: "name",
         },
         {
             label: "Birth Of Date",
             placeholder: "Please input your birth of date",
+            name: "birth_of_date",
         },
         {
             label: "Email",
             placeholder: "Please input your email",
+            name: "email",
         },
         {
             label: "Phone Number",
             placeholder: "Please input your phone number",
+            name: "phone_number",
         },
         {
             label: "NPWP",
             placeholder: "Please input your NPWP",
+            name: "npwp",
         },
         {
             label: "Password",
             placeholder: "Please input your password",
             isObsured: true,
+            name: "password",
         },
         {
             label: "Confirm Password",
             placeholder: "Please input your password",
             isObsured: true,
+            name: "confirm_password",
         },
     ];
 
@@ -64,14 +77,17 @@ const RegisterScreen = () => {
         {
             label: "Min. Investment",
             placeholder: "Please input your min. investment",
+            name: "min_investment",
         },
         {
             label: "Max. Investment",
             placeholder: "Please input your max. investment",
+            name: "max_investment",
         },
         {
             label: "Location",
             placeholder: "Please input your location",
+            name: "location",
         },
     ];
 
@@ -105,11 +121,60 @@ const RegisterScreen = () => {
     };
 
     const handleNext = () => {
-        if (indexField <= 1) {
+        if (indexField < 1) {
             setIndexField(indexField + 1);
         }
+        if (indexField == 1) {
+            submitRegister();
+        }
     };
-
+    
+    const submitRegister = async () => {
+        try{
+            setFormData({...formData, industry: JSON.stringify(formData.industry)});
+            setFormData({...formData, is_representative: formData.is_representative ? 1 : 0});
+            setFormData({...formData, min_investment: parseInt(formData.min_investment)});
+            setFormData({...formData, max_investment: parseInt(formData.max_investment)});
+            setFormData({...formData, npwp: parseInt(formData.npwp)});
+            // {
+            //     "name": "Tanjungg",
+            //     "birth_of_date" : "2024-12-11",
+            //     "email": "tanjungg@gmail.com",
+            //     "phone_number": "0123454576",
+            //     "npwp": 1234567890,
+            //     "password": "tanjung456",
+            //     "min_investment": 1000000,
+            //     "max_investment": 2000000,
+            //     "location": "Semarangg",
+            //     "industry": "['creativee']",
+            //     "is_representative" : 1
+            // }
+            const payload = {
+                name: formData.name,
+                birth_of_date: formData.birth_of_date,
+                email: formData.email,
+                phone_number: formData.phone_number,
+                npwp: parseInt(formData.npwp),
+                password: formData.password,
+                min_investment: parseInt(formData.min_investment),
+                max_investment: parseInt(formData.max_investment),
+                location: formData.location,
+                industry: formData.industry,
+                is_representative: formData.is_representative
+            };
+            console.log("Payload",payload);
+            const response = await Register(payload);
+            if (response.status == "false") {
+                console.log(response.message);
+                return;
+            }
+            Alert.alert("Success", "Register success");
+            navigation.navigate("Login");
+        } catch (error) {
+            const { message } = handleApiError(error);
+            console.log(message);
+        }
+    };
     const handleBack = () => {
         if (indexField > 0) {
             setIndexField(indexField - 1);
@@ -170,7 +235,7 @@ const RegisterScreen = () => {
                                     label={textField.label}
                                     placeholder={textField.placeholder}
                                     isObscured={textField.isObsured}
-                                    onChangeText={(value) => handleChanges(textField.label, value)}
+                                    onChangeText={(value) => handleChanges(textField.name, value)}
                                 />
                             ))}
 
@@ -181,7 +246,7 @@ const RegisterScreen = () => {
                                     label={textField.label}
                                     placeholder={textField.placeholder}
                                     isObscured={textField.isObsured}
-                                    onChangeText={(value) => handleChanges(textField.label, value)}
+                                    onChangeText={(value) => handleChanges(textField.name, value)}
                                 />
                             ))}
 

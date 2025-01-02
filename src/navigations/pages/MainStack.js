@@ -25,6 +25,8 @@ const MainNavigator = () => {
             })}
         >
             <MainTab.Screen name="Home" component={HomeScreen} />
+            <MainTab.Screen name="Investment" component={ProfileScreen} />
+            <MainTab.Screen name="Report" component={ProfileScreen} />
             <MainTab.Screen name="Profile" component={ProfileScreen} />
         </MainTab.Navigator>
     )

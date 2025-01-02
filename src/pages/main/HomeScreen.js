@@ -128,17 +128,17 @@ const HomeScreen = ({
         </View>
       </View>
       <View style={styles.contaner_deals}>
-        <View style={{ width: "70%", paddingRight: 20 }}>
+        <View style={{ width: "50%", paddingRight: 20 }}>
           <Text style={styles.contaner_title}>
             Do you looking for a business to invest?
           </Text>
           <Text>There are no deals yet</Text>
           <ButtonPrimary title="Make a deals" marginTop={20} />
         </View>
-        <View style={{ width: "30%" }}>
+        <View style={{ width: "40%" }}>
           <Image
-            source={require("../../assets/logo_app.png")}
-            style={{ width: 100, height: 100 }}
+            source={require("../../assets/dashboard.png")}
+            style={{ width: 140, height: 140 }}
           />  
         </View>
       </View>
@@ -147,24 +147,49 @@ const HomeScreen = ({
         <Text style={{ color: "blue" }}>See all</Text>
       </View>
       <View style={{ marginTop: 20 }}>
-      <ScrollView horizontal={true}>
-        {businessData.length > 0 ? (
-          businessData.map((business, index) => (
-            <CardBusiness
-              key={index}
-              id={business.business_id}
-              businessName={business.business_name}
-              ownerName={business.owner.bo_first_name}
-              image={business.logo}
-              fundingCurrent={business.funding_current === null ? 0 : business.funding_current}
-              fundingNeeded={business.funding_needed === null ? 0 : business.funding_needed}
-              onPress={()=>handleClick(business.business_id)}
-            />
-          ))
-        ) : (
-          <Text>No business data</Text>
-        )}
-      </ScrollView>
+        <ScrollView horizontal={true}>
+          {businessData.length > 0 ? (
+            businessData.map((business, index) => (
+              <CardBusiness
+                key={index}
+                id={business.business_id}
+                businessName={business.business_name}
+                ownerName={business.owner.bo_first_name}
+                image={business.logo}
+                fundingCurrent={business.funding_current === null ? 0 : business.funding_current}
+                fundingNeeded={business.funding_needed === null ? 0 : business.funding_needed}
+                onPress={()=>handleClick(business.business_id)}
+              />
+            ))
+          ) : (
+            <Text>No business data</Text>
+          )}
+        </ScrollView>
+        
+      </View>
+      <View style={{ marginTop: 30, flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+        <Text style={[styles.subtitle, {width: "70%"}]}>Trending Business</Text>
+        <Text style={{ color: "blue" }}>See all</Text>
+      </View>
+      <View style={{ marginTop: 20 }}>
+        <ScrollView horizontal={true}>
+          {businessData.length > 0 ? (
+            businessData.map((business, index) => (
+              <CardBusiness
+                key={index}
+                id={business.business_id}
+                businessName={business.business_name}
+                ownerName={business.owner.bo_first_name}
+                image={business.logo}
+                fundingCurrent={business.funding_current === null ? 0 : business.funding_current}
+                fundingNeeded={business.funding_needed === null ? 0 : business.funding_needed}
+                onPress={()=>handleClick(business.business_id)}
+              />
+            ))
+          ) : (
+            <Text>No business data</Text>
+          )}
+        </ScrollView>
         
       </View>
     </View>

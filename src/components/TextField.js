@@ -7,10 +7,13 @@ const TextField = ({
     onChangeText,
     isObscured = false,
     value,
+    textColor = '#ffffff'
 }) => {
     return (
         <View>
-            <Text style={styles.text_label}>{label}</Text>
+            <Text style={[styles.text_label, {
+                color: textColor
+            }]}>{label}</Text>
             <TextInput style={styles.input} placeholder={placeholder} onChangeText={onChangeText} secureTextEntry={isObscured} value={value} />
         </View>
     )

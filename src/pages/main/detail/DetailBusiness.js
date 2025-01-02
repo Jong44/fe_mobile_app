@@ -5,8 +5,9 @@ import { getBusinessById, getLogo, getVideoPitch } from "../../../services/api/B
 import ProgressBar from "../../../components/ProgressBar";
 import VideoPlayer from "../../../components/VideoPlayer";
 import { ScrollView } from "react-native-gesture-handler";
+import ButtonPrimary from "../../../components/ButtonPrimary";
 
-const DetailBusiness = ({ navigation,route }) => {
+const DetailBusiness = ({ navigation, route }) => {
   const { id } = route.params;
   const [businessData, setBusinessData] = useState({
     business_id: 0,
@@ -55,15 +56,15 @@ const DetailBusiness = ({ navigation,route }) => {
   };
 
   const getVideoPitchDeck = async (id) => {
-    try{
+    try {
       const response = await getVideoPitch(id);
       const videoBuffer = response?.data?.video_pitch_deck?.data;
-      if(!videoBuffer){
+      if (!videoBuffer) {
         throw new Error("Video buffer is missing");
       }
       const base64Video = bufferToBase64(videoBuffer);
       return `data:video/mp4;base64,${base64Video}`;
-    }catch(error){
+    } catch (error) {
       console.error(`Error fetching video pitch for business ID ${id}:`, error);
       return null;
     }
@@ -94,42 +95,60 @@ const DetailBusiness = ({ navigation,route }) => {
   return (
     <ScrollView>
       <View style={globalStyles.contaner_screen}>
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <TouchableHighlight style={styles.circle_back} onPress={handleBack}>
-          <Text></Text>
-        </TouchableHighlight>
-      </View>
-      <View
-        style={{
-          marginTop: 20,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Image source={{ uri: businessData.logo }} style={{ width: '70%', objectFit: 'cover', height: '200' }} />
-      </View>
-      <View style={{ marginTop: 20 }}>
-        <Text style={styles.title}>{businessData.business_name}</Text>
-        <Text>{businessData.business_description}</Text>
-      </View>
-      <ProgressBar fundingCurrent={businessData.funding_current} fundingNeeded={businessData.funding_needed} />
-      <View>
-        <Text style={{ fontSize: 16, fontWeight: 500 }}>Funding Needed : Rp {businessData.funding_needed ? businessData.funding_needed : 0}</Text>
-        <Text style={{ fontSize: 16, fontWeight: 500 }}>Funding Current : Rp {businessData.funding_current ? businessData.funding_current : 0}</Text>
-      </View>
-      <View style={{ marginTop: 20 }}>
-        <Text style={styles.subtitle}>Deskripsi</Text>
-        <View style={styles.container_description}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <TouchableHighlight style={styles.circle_back} onPress={handleBack}>
+            <Text></Text>
+          </TouchableHighlight>
+        </View>
+        <View
+          style={{
+            marginTop: 20,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Image source={{ uri: businessData.logo }} style={{ width: '70%', objectFit: 'cover', height: '200' }} />
+        </View>
+        <View style={{ marginTop: 20 }}>
+          <Text style={styles.title}>{businessData.business_name}</Text>
           <Text>{businessData.business_description}</Text>
         </View>
+        <ProgressBar fundingCurrent={businessData.funding_current} fundingNeeded={businessData.funding_needed} />
+        <View>
+          <Text style={{ fontSize: 16, fontWeight: 500 }}>Funding Needed : Rp {businessData.funding_needed ? businessData.funding_needed : 0}</Text>
+          <Text style={{ fontSize: 16, fontWeight: 500 }}>Funding Current : Rp {businessData.funding_current ? businessData.funding_current : 0}</Text>
+        </View>
+        <View style={{ marginTop: 20 }}>
+          <Text style={styles.subtitle}>Deskripsi</Text>
+          <View style={styles.container_description}>
+            <Text>{businessData.business_description}</Text>
+          </View>
+        </View>
+        <View style={{ marginTop: 20 }}>
+          <Text style={[styles.subtitle, {
+            marginBottom: 15
+          }]}>Video PitchDeck</Text>
+          <VideoPlayer videoUri={businessData.video_pitch_deck} />
+        </View>
+        <View style={{ marginTop: 20 }}>
+          <Text style={styles.subtitle}>Related Files</Text>
+          <View style={styles.contaner_files}>
+            <Text>No files found</Text>
+          </View>
+          <View style={styles.contaner_files}>
+            <Text>No files found</Text>
+          </View>
+        </View>
+        <View style={{ marginTop: 20 }}>
+          <Text style={styles.subtitle}>Review From Investor</Text>
+          <View style={styles.container_review}>
+            <Text>No review found</Text>
+          </View>
+        </View>
+        <View style={{ marginTop: 20, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+          <ButtonPrimary title="Invest Now" onPress={() => navigation.navigate('PagesStack', { screen: 'Investment', params: { id: businessData.business_id } })} />
+        </View>
       </View>
-      <View style={{ marginTop: 20 }}>
-        <Text style={[styles.subtitle, {
-          marginBottom:15
-        }]}>Video PitchDeck</Text>
-        <VideoPlayer videoUri={businessData.video_pitchdeck} />
-      </View>
-    </View>
     </ScrollView>
   );
 };
@@ -160,6 +179,35 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   container_description: {
+    marginTop: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    backgroundColor: "#ffffff",
+    padding: 20,
+    borderRadius: 10,
+  },
+  contaner_files: {
+    marginTop: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    backgroundColor: "#ffffff",
+    padding: 20,
+    borderRadius: 10,
+  },
+  container_review: {
+    height: 200,
     marginTop: 10,
     shadowColor: "#000",
     shadowOffset: {

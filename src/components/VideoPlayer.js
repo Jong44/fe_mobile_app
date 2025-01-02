@@ -1,11 +1,11 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { StyleSheet, Text, View } from 'react-native';
 import Video from 'react-native-video';
 
 const VideoPlayer = ({
     videoUri
 }) => {
-
+  console.log('videoUri:', videoUri)
   if (!videoUri) {
     return <View style={styles.container}>
         <Text
@@ -22,13 +22,7 @@ const VideoPlayer = ({
   }
   return (
     <View style={styles.container}>
-      <Video
-        source={{ uri: videoUri }}
-        style={styles.video}
-        controls={true}
-        resizeMode="contain"
-        onError={(e) => console.error('Video error:', e)}
-      />
+      
     </View>
   )
 }
