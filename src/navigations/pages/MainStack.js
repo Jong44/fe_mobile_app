@@ -3,6 +3,8 @@ import React from 'react'
 import HomeScreen from '../../pages/main/HomeScreen'
 import ProfileScreen from '../../pages/main/ProfileScreen'
 import FaIcon from 'react-native-vector-icons/FontAwesome'
+import BusinessScreen from '../../pages/main/BusinessScreen'
+import ReportScreen from '../../pages/main/ReportScreen'
 
 const MainTab = createBottomTabNavigator()
 
@@ -25,8 +27,8 @@ const MainNavigator = () => {
             })}
         >
             <MainTab.Screen name="Home" component={HomeScreen} />
-            <MainTab.Screen name="Investment" component={ProfileScreen} />
-            <MainTab.Screen name="Report" component={ProfileScreen} />
+            <MainTab.Screen name="Investment" component={BusinessScreen} />
+            <MainTab.Screen name="Report" component={ReportScreen} />
             <MainTab.Screen name="Profile" component={ProfileScreen} />
         </MainTab.Navigator>
     )

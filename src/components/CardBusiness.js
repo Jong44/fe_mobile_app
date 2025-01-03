@@ -10,20 +10,26 @@ const CardBusiness = ({
     fundingCurrent = 0,
     fundingNeeded = 0,
     onPress,
+    width = "250",
+    height = "150",
+    widthImage = "100%",
+    margin = 6,
+    marginRight = 15,
+    subtitleSize = 12,
 }) => {
   return (
     <TouchableHighlight onPress={onPress} underlayColor={'#51515129'} style={{
-      margin: 6,
-      marginRight: 15,
+      margin: margin,
+      marginRight: marginRight,
     }}>
-      <View style={styles.container}>
+      <View style={[styles.container, { width: width }]}>
         {image !== "" ? (
             <Image
                 source={{ uri: image }}
-                style={{ width: "100%", height: 150, borderRadius: 10 }}
+                style={{ width: widthImage, height: height, borderRadius: 10 }}
             />
         ) : (
-            <View style={{ width: "100%", height: 150, backgroundColor: "gray", borderRadius: 10 }} />
+            <View style={{ width: widthImage, height: height, backgroundColor: "gray", borderRadius: 10 }} />
         )}
         <Text style={{ fontSize: 16, fontWeight: "bold", marginTop: 10 }}>
             {businessName}
@@ -32,7 +38,7 @@ const CardBusiness = ({
             {ownerName}
         </Text>
         <ProgressBar fundingCurrent={fundingCurrent} fundingNeeded={fundingNeeded} />
-        <Text style={{ fontSize: 12, fontWeight: 500 }}>Funding Needded : Rp {fundingNeeded}</Text>
+        <Text style={{ fontSize: subtitleSize, fontWeight: 500 }}>Funding Needed : Rp {fundingNeeded}</Text>
     </View>
     </TouchableHighlight>
   )

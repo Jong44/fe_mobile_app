@@ -136,19 +136,6 @@ const RegisterScreen = ({
             setFormData({...formData, min_investment: parseInt(formData.min_investment)});
             setFormData({...formData, max_investment: parseInt(formData.max_investment)});
             setFormData({...formData, npwp: parseInt(formData.npwp)});
-            // {
-            //     "name": "Tanjungg",
-            //     "birth_of_date" : "2024-12-11",
-            //     "email": "tanjungg@gmail.com",
-            //     "phone_number": "0123454576",
-            //     "npwp": 1234567890,
-            //     "password": "tanjung456",
-            //     "min_investment": 1000000,
-            //     "max_investment": 2000000,
-            //     "location": "Semarangg",
-            //     "industry": "['creativee']",
-            //     "is_representative" : 1
-            // }
             const payload = {
                 name: formData.name,
                 birth_of_date: formData.birth_of_date,
