@@ -41,7 +41,7 @@ const RootNavigator = () => {
 
   return (
     <RootStack.Navigator
-      initialRouteName={isLogin ? 'MainStack' : 'OnboardingStack'} // Tentukan initial route
+      initialRouteName={'OnboardingStack'} // Tentukan initial route
       screenOptions={{ headerShown: false }}
     >
       <RootStack.Screen name="Auth" component={AuthNavigator} />

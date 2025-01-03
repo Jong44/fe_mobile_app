@@ -9,3 +9,11 @@ export const createInvestment = async (investment) => {
     }
 }
 
+export const getInvestmentsByUserId = async (userId) => {
+    try {
+        const response = await AxiosInstance.get("/investments/user/" + userId);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
